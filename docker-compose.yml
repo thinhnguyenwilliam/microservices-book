@@ -1,0 +1,41 @@
+# http://192.168.1.8:8081/
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: book_ecommerce_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: book_ecommerce
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - book_network
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: book_ecommerce_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    networks:
+      - book_network
+    ports:
+      - "8081:80"
+
+
+volumes:
+  db_data:
+
+networks:
+  book_network:
+    driver: bridge
