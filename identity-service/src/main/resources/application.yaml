@@ -23,3 +23,18 @@ server:
   port: 8080
   servlet:
     context-path: /identity
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  otlp:
+    tracing:
+      endpoint: http://${OTEL_EXPORTER_OTLP_ENDPOINT:localhost}:4318/v1/traces
+  tracing:
+    sampling:
+      probability: 1.0

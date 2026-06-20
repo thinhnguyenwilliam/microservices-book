@@ -3,7 +3,7 @@ POST http://localhost:8080/identity/users
 Content-Type: application/json
 
 {
-  "username": "thinhnguyen",
+  "username": "thinhnguyen4",
   "password": "secretpassword",
   "firstName": "Thinh",
   "lastName": "Nguyen",

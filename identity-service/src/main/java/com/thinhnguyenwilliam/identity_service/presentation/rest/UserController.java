@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/users")
@@ -16,11 +18,15 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
 
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
     CreateUserUseCase createUserUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse createUser(@RequestBody UserRequest request) {
+        log.info("Received request to create user: {}", request.getUsername());
+
         // Map Request DTO to Command
         CreateUserCommand command = CreateUserCommand.builder()
                 .username(request.getUsername())

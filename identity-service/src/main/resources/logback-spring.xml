@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Định dạng hiển thị log trên Console (màu sắc cho dễ nhìn) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Định dạng ghi log ra File, hỗ trợ rolling hàng ngày -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Tên file log hiện tại -->
+        <file>logs/identity-service.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Tên file log được backup, xoay vòng mỗi ngày (nửa đêm) -->
+            <fileNamePattern>logs/identity-service-%d{yyyy-MM-dd}.log</fileNamePattern>
+            
+            <!-- Giữ lại log trong vòng 30 ngày -->
+            <maxHistory>30</maxHistory>
+            
+            <!-- Giới hạn tổng dung lượng thư mục log là 1GB -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!-- Tùy chỉnh thêm các field nếu cần (ví dụ: service_name) -->
+            <customFields>{"app":"identity-service"}</customFields>
+        </encoder>
+    </appender>
+
+    <!-- Cấu hình Log Level -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>
