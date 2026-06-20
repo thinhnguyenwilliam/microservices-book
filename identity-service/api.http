@@ -1,9 +1,9 @@
 ### Create User
-POST http://localhost:8080/identity/users
+POST http://localhost:80/identity/users
 Content-Type: application/json
 
 {
-  "username": "thinhnguyen4",
+  "username": "thinhnguyen6",
   "password": "secretpassword",
   "firstName": "Thinh",
   "lastName": "Nguyen",

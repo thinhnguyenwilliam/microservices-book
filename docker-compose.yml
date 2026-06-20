@@ -108,10 +108,63 @@ services:
       - tempo
       - prometheus
 
+  redis:
+    image: redis:7-alpine
+    container_name: book_ecommerce_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - book_network
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: book_ecommerce_redisinsight
+    ports:
+      - "8001:5540"
+    networks:
+      - book_network
+    depends_on:
+      - redis
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: book_ecommerce_node_exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - book_network
+
+  api-gateway:
+    image: nginx:latest
+    container_name: book_ecommerce_api_gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - book_network
+    depends_on:
+      - db
+      - redis
+
 volumes:
   db_data:
   grafana_data:
   tempo_data:
+  redis_data:
 networks:
   book_network:
     driver: bridge

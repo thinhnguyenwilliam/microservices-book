@@ -3,6 +3,7 @@ package com.thinhnguyenwilliam.identity_service.domain.model;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
+public class User implements Serializable {
 
     String id;
     String username;

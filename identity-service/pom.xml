@@ -55,6 +55,12 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- Redis Cache -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
 		<!-- Spring Boot Actuator (Metrics & Health) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

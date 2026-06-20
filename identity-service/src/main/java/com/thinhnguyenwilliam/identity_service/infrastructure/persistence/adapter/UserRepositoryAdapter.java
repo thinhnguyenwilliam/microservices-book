@@ -7,6 +7,8 @@ import com.thinhnguyenwilliam.identity_service.infrastructure.persistence.reposi
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -19,6 +21,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     JpaUserRepository jpaUserRepository;
 
     @Override
+    @CachePut(value = "users", key = "#user.username")
     public User save(User user) {
         // Convert Domain to Entity
         UserEntity entity = UserEntity.builder()
@@ -38,6 +41,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
+    @Cacheable(value = "users", key = "#username")
     public Optional<User> findByUsername(String username) {
         return jpaUserRepository.findByUsername(username)
                 .map(this::toDomain);
