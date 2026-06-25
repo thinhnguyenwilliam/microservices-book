@@ -1,0 +1,51 @@
+# Spring Boot
+**/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+*.code-workspace
+
+# Maven
+.mvn/wrapper/maven-wrapper.properties
+.mvn/timing.properties
+
+# Logs
+logs/
+*.log
+
+# Environment & Secrets — NEVER commit these!
+**/.env
+**/application-dev.yaml
+**/application-dev.yml
+**/application-prod.yaml
+**/application-prod.yml
+**/application-local.yaml
+**/application-local.yml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker volumes (nếu mount local)
+docker/data/
+
+# k6 results
+*.json.gz
